@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin portal</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+    
+  </head>
+  <body>
+    <div id="head" class="text-center">
+      <h1 align="center" style="color: azure;">Blockchain Based Electronic Voting System For Secure and Transparent Elections In India </h1>
+      <br/> 
+    </div>
+
+    <div class="container">
+     <legend>Add Candidate</legend>  
+     <table  class="table text-center"> 
+              <tr>
+                <th>Name </th><td>  <input id="name" type="text" name="name" placeholder ="Candidates name" autocomplete="off"></td>  
+                <th>Party</th><td><input id="party" type="text" name="party" placeholder ="Candidates party"></td> 
+              </tr>
+      </table> 
+      <input id="addCandidate" type="submit" name="submit" value="Add Candidate">
+      <p id="Aday"></p>
+    </div>
+
+    <div class="container">
+     <legend>Enter Voting Dates</legend>  
+     <table  class="table text-center"> 
+              <tr>              
+                <th>Start date</th><td><input id="startDate" type="date" name=""></td>
+                <th>End date</th><td>    <input id="endDate" type="date" name="" ></td>
+              </tr>
+      </table> 
+      <input id="addDate" type="submit" name="submit" value="Define Dates">
+      <p id="Aday"></p>
+    </div>
+    <div class="container">
+      <legend>Candidate List</legend>
+      <table id="candidateTable" class="table text-center">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Party</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Candidates will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="container">
+      <legend>Voting Dates</legend>
+      <p id="votingDatesDisplay" style="font-size: 18px; color: darkslategray;">
+        <!-- Voting dates will be dynamically displayed here -->
+      </p>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="dist\app.bundle.js" type="module"></script>
+  <script>
+    // Add Candidate button functionality
+document.getElementById("addCandidate").addEventListener("click", function() {
+  const name = document.getElementById("name").value;
+  const party = document.getElementById("party").value;
+  
+  if (name && party) {
+    addCandidate(name, party)
+      .then(() => {
+        alert("Candidate added successfully!");
+        addCandidateToTable(name, party); // Display candidate in table
+        document.getElementById("name").value = "";  // Clear input fields
+        document.getElementById("party").value = "";
+      })
+      .catch((error) => {
+        console.error("Error adding candidate:", error);
+        alert("Failed to add candidate.");
+      });
+  } else {
+    alert("Please enter both name and party.");
+  }
+});
+
+// Define Dates button functionality
+document.getElementById("addDate").addEventListener("click", function() {
+  const startDate = document.getElementById("startDate").value;
+  const endDate = document.getElementById("endDate").value;
+
+  if (startDate && endDate) {
+    defineVotingDates(startDate, endDate)
+      .then(() => {
+        alert("Voting dates defined successfully!");
+        displayVotingDates(startDate, endDate); // Display dates
+        document.getElementById("startDate").value = "";  // Clear date fields
+        document.getElementById("endDate").value = "";
+      })
+      .catch((error) => {
+        console.error("Error defining dates:", error);
+        alert("Failed to define voting dates.");
+      });
+  } else {
+    alert("Please enter both start and end dates.");
+  }
+});
+
+// Function to add candidate to the table
+function addCandidateToTable(name, party) {
+  const tableBody = document.getElementById("candidateTable").querySelector("tbody");
+  const newRow = document.createElement("tr");
+
+  const nameCell = document.createElement("td");
+  nameCell.textContent = name;
+  
+  const partyCell = document.createElement("td");
+  partyCell.textContent = party;
+
+  newRow.appendChild(nameCell);
+  newRow.appendChild(partyCell);
+  tableBody.appendChild(newRow);
+}
+
+// Function to display voting dates
+function displayVotingDates(startDate, endDate) {
+  const datesDisplay = document.getElementById("votingDatesDisplay");
+  datesDisplay.textContent = `Voting Period: ${startDate} to ${endDate}`;
+}
+
+// Placeholder functions for smart contract interactions
+async function addCandidate(name, party) {
+  console.log("Adding candidate:", name, party);
+  // Replace with actual Web3 code here
+  return Promise.resolve();
+}
+
+async function defineVotingDates(startDate, endDate) {
+  console.log("Defining voting dates:", startDate, endDate);
+  // Replace with actual Web3 code here
+  return Promise.resolve();
+}
+
+  </script>
+  
+  </body>
+</html>
